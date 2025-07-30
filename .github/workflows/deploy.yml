@@ -31,17 +31,10 @@ jobs:
         run: flutter pub get
 
       - name: Run tests with coverage ✅
-        run: flutter test --coverage
+        run: dart run test_coverage_badge
 
       - name: Install lcov
         run: sudo apt-get install -y lcov
-
-      - name: Generate coverage badge
-        run: |
-          dart pub global activate lcov_badge
-          dart pub global run lcov_badge \
-            --lcov=coverage/lcov.info \
-            --output=coverage_badge.svg
 
       - name: Generate HTML report from lcov.info
         run: genhtml coverage/lcov.info --output=coverage
