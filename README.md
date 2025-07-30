@@ -18,12 +18,13 @@ samples, guidance on mobile development, and a full API reference.
 # Déployer un projet **Flutter Web** sur **GitHub Pages**
 
 
-Quand on git push origin main
+Au `push origin main`
 |     Étape           |Commande / Action                         
 |----------------|-------------------------------|
+|Déploiement test          |`flutter test --coverage`|
 |Build Flutter Web|`flutter build web`          |
-|Déploiement manuel         |Push de `build/web` dans `gh-pages`           |
-|Déploiement automatique          |Utiliser GitHub Actions (`peaceiris/actions-gh-pages`)|
+|Déploiement automatique App        |Push de `build/web` dans `gh-pages`           |
+|Déploiement automatique Coverage        |Push de `build/web` dans `gh-pages`           |
 
 # Troubleshoot
 
@@ -43,11 +44,9 @@ Voici ce que tu dois faire :
 1.  Vérifie ta version locale Flutter :  flutter --version
 2. Modifie ton fichier `deploy.ym`
 
-
-###  Ajouter un badge de couverture dans ton README
+### Vérifie ta couverture de test`
 Voici ce que tu dois faire :
-🔹 Avec Codecov
-1.  Crée un compte sur https://codecov.io
-2. Lien ton dépôt GitHub
+1.  install genhtml : **sudo apt install lcov**
+2. run les tests : **flutter test --coverage**
+3. deploye le coverage: **genhtml coverage/lcov.info -o coverage/html**
 
-![codecov](https://codecov.io/gh/obione94/flutterWeb/branch/main/graph/badge.svg)

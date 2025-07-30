@@ -1,45 +1,50 @@
-name: Deploy Flutter Web to GitHub Pages
+name: Test, Coverage and Deploy Flutter Web to GitHub Pages
 
 on:
   push:
     branches: [main] # ou "master" si c'est ta branche par défaut
 
 jobs:
-  build:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.32.7' # Remplace par ta version locale (obtenue avec `flutter --version`)
 
-      - name: Get dependencies
+      - name: Install dependencies
         run: flutter pub get
 
       - name: Run tests with coverage ✅
         run: flutter test --coverage
 
-      - name: Upload coverage report as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage/lcov.info
+      - name: Install lcov
+        run: sudo apt-get install -y lcov
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/lcov.info
+      - name: Generate HTML report from lcov.info
+        run: genhtml coverage/lcov.info --output-directory coverage/html
 
       - name: Build web app
         run: flutter build web --base-href  /flutterWeb/ # Corriger les assets	Modifier le <base href="..."> dans index.html
 
-      - name: Deploy to GitHub Pages
+      # 🚀 Déploiement combiné
+      - name: Deploy app and coverage to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          publish_dir: ./publish
+        env:
+          FLUTTER_ROOT: ${{ runner.tool_cache }}/flutter
+          PUB_CACHE: ${{ runner.tool_cache }}/pub
+
+      - name: Prepare combined publish directory
+        run: |
+          mkdir -p publish
+          cp -r build/web/* publish/
+          mkdir -p publish/coverage
+          cp -r coverage/html/* publish/coverage/
