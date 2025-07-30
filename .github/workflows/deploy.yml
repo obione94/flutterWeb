@@ -9,14 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.32.7' # Remplace par ta version locale (obtenue avec `flutter --version`)
 
-      - run: flutter pub get
-      - run: flutter build web --base-href  /flutterWeb/ # Corriger les assets	Modifier le <base href="..."> dans index.html
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run tests with coverage ✅
+        run: flutter test
+
+      - name: Upload coverage report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/lcov.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/lcov.info
+
+      - name: Build web app
+        run: flutter build web --base-href  /flutterWeb/ # Corriger les assets	Modifier le <base href="..."> dans index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
