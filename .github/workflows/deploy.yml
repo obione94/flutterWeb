@@ -16,7 +16,7 @@ jobs:
           flutter-version: '3.32.7' # Remplace par ta version locale (obtenue avec `flutter --version`)
 
       - run: flutter pub get
-      - run: flutter build web
+      - run: flutter build web --base-href  /flutterWeb/ # Corriger les assets	Modifier le <base href="..."> dans index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
