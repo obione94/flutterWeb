@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -33,18 +33,17 @@ jobs:
         run: flutter build web --base-href  /flutterWeb/ # Corriger les assets	Modifier le <base href="..."> dans index.html
 
       # 🚀 Déploiement combiné
-      - name: Deploy app and coverage to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./publish
-        env:
-          FLUTTER_ROOT: ${{ runner.tool_cache }}/flutter
-          PUB_CACHE: ${{ runner.tool_cache }}/pub
-
       - name: Prepare combined publish directory
         run: |
           mkdir -p publish
           cp -r build/web/* publish/
           mkdir -p publish/coverage
           cp -r coverage/* publish/coverage/
+
+      - name: Deploy app and coverage to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish
+
+
