@@ -21,7 +21,7 @@ jobs:
         run: flutter pub get
 
       - name: Run tests with coverage ✅
-        run: flutter test
+        run: flutter test --coverage
 
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v4
