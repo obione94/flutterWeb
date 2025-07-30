@@ -23,8 +23,8 @@ Au `push origin main`
 |----------------|-------------------------------|
 |Déploiement test          |`flutter test --coverage`|
 |Build Flutter Web|`flutter build web`          |
-|Déploiement automatique App        |Push de `build/web` dans `gh-pages`           |
-|Déploiement automatique Coverage        |Push de `build/web` dans `gh-pages`           |
+|Déploiement automatique App        |Push de `build/web` dans `gh-pages`    publish/       |
+|Déploiement automatique Coverage        |Push de `coverage/html` dans `gh-pages`   publish/coverage/        |
 
 # Troubleshoot
 

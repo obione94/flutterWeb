@@ -27,7 +27,7 @@ jobs:
         run: sudo apt-get install -y lcov
 
       - name: Generate HTML report from lcov.info
-        run: genhtml coverage/lcov.info --output-directory coverage/html
+        run: genhtml coverage/lcov.info --output=coverage
 
       - name: Build web app
         run: flutter build web --base-href  /flutterWeb/ # Corriger les assets	Modifier le <base href="..."> dans index.html
@@ -47,4 +47,4 @@ jobs:
           mkdir -p publish
           cp -r build/web/* publish/
           mkdir -p publish/coverage
-          cp -r coverage/html/* publish/coverage/
+          cp -r coverage/* publish/coverage/
