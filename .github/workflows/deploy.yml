@@ -12,16 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache Flutter
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pub-cache
-            ~/.flutter
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -31,7 +21,9 @@ jobs:
         run: flutter pub get
 
       - name: Run tests with coverage ✅
-        run: dart run test_coverage_badge
+        run: |
+          dart run test_coverage_badge
+          mv coverage_badge.svg coverage/
 
       - name: Install lcov
         run: sudo apt-get install -y lcov
@@ -55,5 +47,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./publish
-
-

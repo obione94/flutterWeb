@@ -50,5 +50,5 @@ Voici ce que tu dois faire :
 2. run les tests : **flutter test --coverage**
 3. deploye le coverage: **genhtml coverage/lcov.info -o coverage/html**
 
-![Coverage](https://github.com/obione94/flutterWeb/coverage_badge.svg?sanitize=true)
+![Coverage](https://github.com/obione94/flutterWeb/coverage/coverage_badge.svg?sanitize=true)
 
