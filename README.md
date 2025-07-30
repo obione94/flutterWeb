@@ -43,4 +43,11 @@ Voici ce que tu dois faire :
 1.  Vérifie ta version locale Flutter :  flutter --version
 2. Modifie ton fichier `deploy.ym`
 
+
+###  Ajouter un badge de couverture dans ton README
+Voici ce que tu dois faire :
+🔹 Avec Codecov
+1.  Crée un compte sur https://codecov.io
+2. Lien ton dépôt GitHub
+
 ![codecov](https://codecov.io/gh/obione94/flutterWeb/branch/main/graph/badge.svg)
