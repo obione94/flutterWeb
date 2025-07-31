@@ -7,26 +7,13 @@ on:
 jobs:
   test-and-deploy:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/instrumentisto/flutter:3.32.7 # Remplace par ta version locale (obtenue avec `flutter --version`)
+      options: --user root  # Si besoin de droits élevés (pour installer outils par exemple)
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Cache Flutter
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pub-cache
-            ~/.flutter
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.32.7' # Remplace par ta version locale (obtenue avec `flutter --version`)
-          cache: true
 
       - name: Install dependencies
         run: flutter pub get
